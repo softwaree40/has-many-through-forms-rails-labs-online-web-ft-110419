@@ -1,8 +1,16 @@
-<%= form_for @post do |f| %>
-<%= f.text_field :title %>
-<%= f.text_field :content %>
-<%= fields_for :comments, post.comments.build do |comment_field| %>
-<%= comment_field.comment_content_text_field :content %>
+<%= @post.title%>
+<%= @post.content%>
+<% @post.categories do |catego|%>
+<%= catego %>
 <%end%>
+<% @post.comments do |commt|%>
+<%= commt %>
+<%end%>
+<%=@user_post = @post.users.find(comments.user_id)%>
+<%=@user_post.name%>
+<%=form_for @post.comments.build do |f|%>
+<%= f.hidden_field :post_id, value: @post.id %>
+<%= f.text_field :content%>
+<%= f.collection_select :user_id,User.all, :id ,:username %>
 <%= f.submit %>
 <%end%>
